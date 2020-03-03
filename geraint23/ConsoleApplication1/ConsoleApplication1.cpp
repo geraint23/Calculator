@@ -1,6 +1,7 @@
 ﻿#include <stack>
 #include <vector>
 #include <iostream>
+#include <fstream>
 #include "stdlib.h"
 #include <ctime>
 #include <string>
@@ -14,14 +15,13 @@ Calculator::Calculator() {}
 
 string Calculator::MakeFormula() {
 	string formula = "";
-	srand((unsigned int)time(NULL));
 	int count = random(1, 2);
 	int start = 0;
-	int number1 = random(0, 100);
+	int number1 = random(1, 100);
 	formula += to_string(number1);
 	while (start <= count) {
 		int operation = random(0, 3);
-		int number2 = random(0, 100);
+		int number2 = random(1, 100);
 		formula += op[operation] + to_string(number2);
 		start++;
 	}
@@ -105,11 +105,17 @@ string Calculator::Solve(string formula) {
 int main()
 {
 	Calculator* calc = new Calculator();
-	string question = calc->MakeFormula();
-	cout << question << endl;
-	string ret = calc->Solve("11+22");
-	cout << ret << endl;
-	getchar();
+	int n;
+	cin >> n;
+	srand((unsigned int)time(NULL));
+	ofstream file;
+	file.open("subject.txt");
+	while (n--) {
+		string question = calc->MakeFormula();
+		string ret = calc->Solve(question);
+		file << ret << endl;
+	}
+	return 0;
 }
 
 
